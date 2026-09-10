@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>PawFind | PawPulse</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            background: #fffaf5;
+
+            color: #2d2d2d;
+
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        nav {
+
+            height: 75px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            background: white;
+
+            border-bottom: 1px solid #eee;
+
+        }
+
+
+        .logo {
+
+            font-size: 26px;
+
+            font-weight: bold;
+
+            color: #e8753d;
+
+        }
+
+
+        .logo span {
+
+            color: #333;
+
+        }
+
+
+        .nav-links {
+
+            display: flex;
+
+            gap: 30px;
+
+            list-style: none;
+
+        }
+
+
+        .nav-links a {
+
+            text-decoration: none;
+
+            color: #555;
+
+            font-size: 15px;
+
+        }
+
+
+        .nav-links a:hover {
+
+            color: #e8753d;
+
+        }
+
+
+        /* =====================================================
+           CONTAINER
+        ===================================================== */
+
+        .container {
+
+            width: 90%;
+
+            max-width: 950px;
+
+            margin: 60px auto;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .tag {
+
+            display: inline-block;
+
+            background: #ffe8d8;
+
+            color: #d85f28;
+
+            padding: 9px 16px;
+
+            border-radius: 30px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        h1 {
+
+            font-size: 48px;
+
+            line-height: 1.1;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .intro {
+
+            color: #777;
+
+            font-size: 17px;
+
+            line-height: 1.7;
+
+            max-width: 700px;
+
+            margin-bottom: 40px;
+
+        }
+
+
+        /* =====================================================
+           FORM CARD
+        ===================================================== */
+
+        .card {
+
+            background: white;
+
+            border: 1px solid #eee;
+
+            border-radius: 22px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,0.05);
+
+        }
+
+
+        .card h2 {
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .card > p {
+
+            color: #888;
+
+            font-size: 14px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        /* =====================================================
+           FORM GRID
+        ===================================================== */
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 24px;
+
+        }
+
+
+        .field {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .field label {
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .field input,
+        .field select,
+        .field textarea {
+
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+
+            font-family: Arial, sans-serif;
+
+            background: white;
+
+            outline: none;
+
+        }
+
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+
+            border-color: #e8753d;
+
+        }
+
+
+        .full {
+
+            grid-column: 1 / -1;
+
+        }
+
+
+        /* =====================================================
+           BUTTON
+        ===================================================== */
+
+        .button-area {
+
+            margin-top: 30px;
+
+        }
+
+
+        .btn {
+
+            border: none;
+
+            background: #e8753d;
+
+            color: white;
+
+            padding: 14px 25px;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        .btn:hover {
+
+            background: #cf5e28;
+
+        }
+
+
+        /* =====================================================
+           RESULTS
+        ===================================================== */
+
+        .results {
+
+            margin-top: 45px;
+
+        }
+
+
+        .results h2 {
+
+            font-size: 30px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .results-intro {
+
+            color: #888;
+
+            font-size: 14px;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .match-list {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 15px;
+
+        }
+
+
+        .match {
+
+            background: white;
+
+            border: 1px solid #eee;
+
+            border-radius: 16px;
+
+            padding: 22px 25px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.04);
+
+        }
+
+
+        .match-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+
+        }
+
+
+        .match-icon {
+
+            width: 52px;
+
+            height: 52px;
+
+            border-radius: 14px;
+
+            background: #fff0e5;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 25px;
+
+        }
+
+
+        .match-name {
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .match-details {
+
+            color: #999;
+
+            font-size: 12px;
+
+        }
+
+
+        .score-area {
+
+            text-align: right;
+
+        }
+
+
+        .score {
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+            color: #e8753d;
+
+        }
+
+
+        .score-label {
+
+            color: #999;
+
+            font-size: 10px;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        /* =====================================================
+           INFO
+        ===================================================== */
+
+        .info {
+
+            margin-top: 25px;
+
+            background: #fffaf5;
+
+            border-left: 4px solid #e8753d;
+
+            border-radius: 10px;
+
+            padding: 18px 20px;
+
+            color: #666;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =====================================================
+           EMPTY MATCH
+        ===================================================== */
+
+        .no-match {
+
+            background: white;
+
+            border: 1px solid #eee;
+
+            border-radius: 16px;
+
+            padding: 30px;
+
+            text-align: center;
+
+            color: #777;
+
+        }
+
+
+        .back {
+
+            display: inline-block;
+
+            margin-top: 25px;
+
+            text-decoration: none;
+
+            color: #777;
+
+            font-size: 13px;
+
+        }
+
+
+        .back:hover {
+
+            color: #e8753d;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .nav-links {
+
+                display: none;
+
+            }
+
+
+            h1 {
+
+                font-size: 34px;
+
+            }
+
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .full {
+
+                grid-column: auto;
+
+            }
+
+
+            .match {
+
+                gap: 15px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<nav>
+
+    <div class="logo">
+        🐾 Paw<span>Pulse</span>
+    </div>
+
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'dog_list' %}">
+                My Dogs
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'vitality' %}">
+                Vitality
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'pawmood' %}">
+                PawMood
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'pawmatch' %}">
+                PawMatch
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'pawfind' %}">
+                PawFind
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+
+<div class="container">
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <div class="tag">
+        🔎 PAWFIND
+    </div>
+
+
+    <h1>
+        Help bring a dog home.
+    </h1>
+
+
+    <p class="intro">
+
+        Report a lost or found dog and let PawFind
+        compare reports using breed, color, size,
+        location and date proximity.
+
+    </p>
+
+
+
+    <!-- =====================================================
+         REPORT FORM
+    ====================================================== -->
+
+    <div class="card">
+
+        <h2>
+            Create a PawFind Report 🐕
+        </h2>
+
+
+        <p>
+            The more details you provide, the stronger
+            the matching results can be.
+        </p>
+
+
+        <form
+            method="POST"
+            enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+
+            <div class="form-grid">
+
+
+                <div class="field">
+
+                    <label>
+                        Report Type
+                    </label>
+
+                    {{ form.report_type }}
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Dog Name
+                    </label>
+
+                    {{ form.dog_name }}
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Breed
+                    </label>
+
+                    {{ form.breed }}
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Color
+                    </label>
+
+                    {{ form.color }}
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Size
+                    </label>
+
+                    {{ form.size }}
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Location
+                    </label>
+
+                    {{ form.location }}
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Date
+                    </label>
+
+                    {{ form.date }}
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Photo
+                    </label>
+
+                    {{ form.photo }}
+
+                </div>
+
+
+                <div class="field full">
+
+                    <label>
+                        Description
+                    </label>
+
+                    {{ form.description }}
+
+                </div>
+
+
+            </div>
+
+
+            <div class="button-area">
+
+                <button
+                    type="submit"
+                    class="btn">
+
+                    Submit Report & Find Matches 🔎
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         MATCH RESULTS
+    ====================================================== -->
+
+    {% if results %}
+
+    <div class="results">
+
+
+        <h2>
+            Possible Matches 🐾
+        </h2>
+
+
+        <p class="results-intro">
+
+            PawFind compared your report with
+            opposite-type reports already in the system.
+
+        </p>
+
+
+        <div class="match-list">
+
+
+            {% for match in results %}
+
+            <div class="match">
+
+
+                <div class="match-left">
+
+                    <div class="match-icon">
+                        🐶
+                    </div>
+
+
+                    <div>
+
+                        <div class="match-name">
+
+                            {% if match.report.dog_name %}
+
+                                {{ match.report.dog_name }}
+
+                            {% else %}
+
+                                Dog Report
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="match-details">
+
+                            {{ match.report.breed|default:"Breed not specified" }}
+                            ·
+                            {{ match.report.color|default:"Color not specified" }}
+                            ·
+                            {{ match.report.location }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="score-area">
+
+                    <div class="score">
+
+                        {{ match.score }}%
+
+                    </div>
+
+
+                    <div class="score-label">
+
+                        COMPATIBILITY
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            {% endfor %}
+
+
+        </div>
+
+
+        <div class="info">
+
+            🤖 <strong>Python Matching Engine:</strong>
+
+            PawFind calculates compatibility using
+            breed, color, size, location and date
+            proximity. A higher percentage indicates
+            more matching attributes.
+
+        </div>
+
+
+    </div>
+
+    {% endif %}
+
+
+
+    {% if not results and request.method == 'POST' %}
+
+    <div class="results">
+
+        <div class="no-match">
+
+            🔎 No possible matches were found yet.
+
+            <br><br>
+
+            Your report has been saved and can be
+            compared against future reports.
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+
+    <a
+        href="{% url 'home' %}"
+        class="back">
+
+        ← Back to PawPulse
+
+    </a>
+
+
+</div>
+
+
+</body>
+
+</html>

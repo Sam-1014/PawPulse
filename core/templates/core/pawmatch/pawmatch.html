@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>PawMatch | PawPulse</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #fffaf5;
+            color: #333;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        nav {
+            height: 75px;
+            background: white;
+            border-bottom: 1px solid #eee;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e8753d;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #e8753d;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .container {
+            width: 90%;
+            max-width: 950px;
+            margin: 60px auto;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .tag {
+            display: inline-block;
+
+            background: #ffe8d8;
+            color: #e8753d;
+
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: bold;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .intro {
+            color: #777;
+            font-size: 16px;
+            line-height: 1.7;
+
+            max-width: 650px;
+
+            margin-bottom: 40px;
+        }
+
+
+        /* =====================================================
+           QUESTIONNAIRE CARD
+        ===================================================== */
+
+        .match-card {
+            background: white;
+
+            border: 1px solid #eee;
+
+            border-radius: 22px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .match-card h2 {
+            margin-bottom: 8px;
+        }
+
+        .match-card > p {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 24px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .field label {
+            font-size: 14px;
+            font-weight: bold;
+
+            margin-bottom: 8px;
+
+            color: #444;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+
+            background: white;
+
+            outline: none;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: #e8753d;
+        }
+
+
+        /* =====================================================
+           CHECKBOX
+        ===================================================== */
+
+        .checkbox-field {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            margin-top: 5px;
+        }
+
+        .checkbox-field input {
+            width: 18px;
+            height: 18px;
+        }
+
+        .checkbox-field label {
+            font-size: 14px;
+            color: #555;
+        }
+
+
+        /* =====================================================
+           BUTTON
+        ===================================================== */
+
+        .button-area {
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+
+            border: none;
+
+            background: #e8753d;
+            color: white;
+
+            padding: 14px 25px;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+
+        /* =====================================================
+           RESULTS
+        ===================================================== */
+
+        .results {
+            margin-top: 45px;
+        }
+
+        .results-header {
+            margin-bottom: 22px;
+        }
+
+        .results-header h2 {
+            font-size: 28px;
+            margin-bottom: 7px;
+        }
+
+        .results-header p {
+            color: #888;
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           BREED CARDS
+        ===================================================== */
+
+        .breed-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .breed-card {
+            background: white;
+
+            border: 1px solid #eee;
+
+            border-radius: 16px;
+
+            padding: 22px 25px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.04);
+        }
+
+        .breed-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .breed-icon {
+            width: 50px;
+            height: 50px;
+
+            background: #fff0e5;
+
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 25px;
+        }
+
+        .breed-name {
+            font-size: 17px;
+            font-weight: bold;
+
+            margin-bottom: 5px;
+        }
+
+        .breed-rank {
+            color: #999;
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           SCORE
+        ===================================================== */
+
+        .score-area {
+            text-align: right;
+        }
+
+        .score {
+            font-size: 27px;
+            font-weight: bold;
+            color: #e8753d;
+        }
+
+        .score-label {
+            font-size: 11px;
+            color: #999;
+        }
+
+
+        /* =====================================================
+           INFO BOX
+        ===================================================== */
+
+        .info-box {
+            margin-top: 30px;
+
+            background: #fffaf5;
+
+            border-left: 4px solid #e8753d;
+
+            padding: 18px 20px;
+
+            border-radius: 10px;
+
+            color: #666;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           BACK BUTTON
+        ===================================================== */
+
+        .back {
+            margin-top: 25px;
+
+            display: inline-block;
+
+            color: #777;
+
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+        .back:hover {
+            color: #e8753d;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .breed-card {
+                padding: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<nav>
+
+    <div class="logo">
+        🐾 PawPulse
+    </div>
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'dog_list' %}">
+                My Dogs
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'vitality' %}">
+                Vitality
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'pawmood' %}">
+                PawMood
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'pawmatch' %}">
+                PawMatch
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                PawFind
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<div class="container">
+
+
+    <div class="tag">
+        🧠 PAWMATCH
+    </div>
+
+
+    <h1>
+        Which dog is right for you?
+    </h1>
+
+
+    <p class="intro">
+
+        Tell PawMatch a little about your lifestyle.
+        Our Python-powered compatibility engine will
+        compare your preferences with different dog
+        breeds and find your best matches.
+
+    </p>
+
+
+
+    <!-- =====================================================
+         QUESTIONNAIRE
+    ====================================================== -->
+
+    <div class="match-card">
+
+        <h2>
+            Find your perfect match 🐶
+        </h2>
+
+        <p>
+            Answer a few simple questions about your
+            lifestyle.
+        </p>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <div class="form-grid">
+
+
+                <!-- SIZE -->
+
+                <div class="field">
+
+                    <label>
+                        Preferred Dog Size
+                    </label>
+
+                    {{ form.preferred_size }}
+
+                </div>
+
+
+                <!-- ACTIVITY -->
+
+                <div class="field">
+
+                    <label>
+                        Your Activity Level
+                    </label>
+
+                    {{ form.activity_level }}
+
+                </div>
+
+
+                <!-- LIVING -->
+
+                <div class="field">
+
+                    <label>
+                        Living Situation
+                    </label>
+
+                    {{ form.living_situation }}
+
+                </div>
+
+
+                <!-- WALKING -->
+
+                <div class="field">
+
+                    <label>
+                        Walking Time Per Day
+                    </label>
+
+                    {{ form.walking_time }}
+
+                </div>
+
+
+            </div>
+
+
+            <!-- FIRST TIME OWNER -->
+
+            <div class="checkbox-field">
+
+                {{ form.first_time_owner }}
+
+                <label>
+                    I am a first-time dog owner
+                </label>
+
+            </div>
+
+
+            <!-- BUTTON -->
+
+            <div class="button-area">
+
+                <button
+                    type="submit"
+                    class="btn">
+
+                    Find My Matches 🐾
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         RESULTS
+    ====================================================== -->
+
+    {% if results %}
+
+    <div class="results">
+
+
+        <div class="results-header">
+
+            <h2>
+                Your PawMatch Results 🐕
+            </h2>
+
+            <p>
+                Based on your lifestyle preferences,
+                these breeds are your strongest matches.
+            </p>
+
+        </div>
+
+
+
+        <div class="breed-list">
+
+
+            {% for result in results %}
+
+            <div class="breed-card">
+
+
+                <div class="breed-info">
+
+                    <div class="breed-icon">
+                        🐶
+                    </div>
+
+
+                    <div>
+
+                        <div class="breed-name">
+                            {{ result.breed }}
+                        </div>
+
+                        <div class="breed-rank">
+
+                            Match #{{ forloop.counter }}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="score-area">
+
+                    <div class="score">
+
+                        {{ result.score }}%
+
+                    </div>
+
+                    <div class="score-label">
+
+                        COMPATIBILITY
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            {% endfor %}
+
+
+        </div>
+
+
+
+        <div class="info-box">
+
+            💡 <strong>How PawMatch works:</strong>
+
+            Your answers are processed using a
+            Python rule-based compatibility algorithm.
+            The system compares size, activity level,
+            living situation, walking time and
+            first-time ownership preferences.
+
+        </div>
+
+
+    </div>
+
+    {% endif %}
+
+
+
+    <a
+        href="{% url 'home' %}"
+        class="back">
+
+        ← Back to PawPulse
+
+    </a>
+
+
+</div>
+
+
+</body>
+
+</html>

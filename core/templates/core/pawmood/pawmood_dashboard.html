@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>PawMood | Behavior Journal</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #fffaf5;
+            color: #2d2d2d;
+        }
+
+        nav {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            background: white;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #e8753d;
+        }
+
+        .logo span {
+            color: #333;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: #e8753d;
+        }
+
+        .container {
+            width: 86%;
+            max-width: 1100px;
+            margin: 60px auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #ffe8d8;
+            color: #d85f28;
+            padding: 9px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .header p {
+            color: #777;
+            font-size: 16px;
+        }
+
+        .record {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+        }
+
+        .record-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .dog-name {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .date {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        .stat {
+            background: #fffaf5;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .mood {
+            margin-top: 18px;
+            padding: 14px 18px;
+            background: #fff3eb;
+            border-radius: 12px;
+            color: #d85f28;
+            font-weight: bold;
+        }
+
+        .notes {
+            margin-top: 15px;
+            color: #666;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .primary {
+            background: #e8753d;
+            color: white;
+        }
+
+        .secondary {
+            border: 1px solid #ddd;
+            background: white;
+            color: #444;
+        }
+
+        .empty {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 18px;
+            padding: 60px 30px;
+            text-align: center;
+        }
+
+        .empty-icon {
+            font-size: 55px;
+            margin-bottom: 20px;
+        }
+
+        .empty h2 {
+            margin-bottom: 10px;
+        }
+
+        .empty p {
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .insights {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 18px;
+    padding: 28px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+}
+
+.insights-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.insights-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    background: #ffe8d8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+}
+
+.insights-header h2 {
+    margin-bottom: 5px;
+}
+
+.insights-header p {
+    color: #777;
+    font-size: 14px;
+}
+
+.insight-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.insight {
+    background: #fffaf5;
+    border-left: 4px solid #e8753d;
+    border-radius: 10px;
+    padding: 15px 18px;
+    color: #555;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+        @media (max-width: 900px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .record-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+<nav>
+
+    <div class="logo">
+        🐾 Paw<span>Pulse</span>
+    </div>
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'dog_list' %}">
+                My Dogs
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'vitality' %}">
+                Vitality
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'pawmood' %}">
+                PawMood
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+
+<div class="container">
+
+
+    <div class="header">
+
+        <div class="tag">
+            😚 PAWMOOD JOURNAL
+        </div>
+
+        <h1>
+            Your dog's behavior story.
+        </h1>
+
+        <p>
+            Track daily patterns and understand how your
+            dog's mood and activity change over time.
+        </p>
+
+    </div>
+
+    {% if observations %}
+
+<div class="insights">
+
+    <div class="insights-header">
+        <div class="insights-icon">🧠</div>
+
+        <div>
+            <h2>PawMood Intelligence</h2>
+            <p>
+                Python-powered observations from recent behaviour.
+            </p>
+        </div>
+    </div>
+
+
+    <div class="insight-list">
+
+        {% for observation in observations %}
+
+        <div class="insight">
+            {{ observation }}
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endif %}
+
+    {% if records %}
+
+
+        {% for record in records %}
+
+        <div class="record">
+
+
+            <div class="record-header">
+
+                <div class="dog-name">
+                    🐶 {{ record.dog.name }}
+                </div>
+
+                <div class="date">
+                    {{ record.date }}
+                </div>
+
+            </div>
+
+
+            <div class="stats">
+
+
+                <div class="stat">
+
+                    <div class="stat-icon">
+                        ⚡
+                    </div>
+
+                    <div class="stat-label">
+                        Energy
+                    </div>
+
+                    <div class="stat-value">
+                        {{ record.energy }}/10
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-icon">
+                        🍖
+                    </div>
+
+                    <div class="stat-label">
+                        Appetite
+                    </div>
+
+                    <div class="stat-value">
+                        {{ record.appetite }}/10
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-icon">
+                        🎾
+                    </div>
+
+                    <div class="stat-label">
+                        Playfulness
+                    </div>
+
+                    <div class="stat-value">
+                        {{ record.playfulness }}/10
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-icon">
+                        😴
+                    </div>
+
+                    <div class="stat-label">
+                        Sleep
+                    </div>
+
+                    <div class="stat-value">
+                        {{ record.sleep_hours }} hrs
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="stat-icon">
+                        😊
+                    </div>
+
+                    <div class="stat-label">
+                        Mood
+                    </div>
+
+                    <div class="stat-value">
+                        {{ record.mood }}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            {% if record.mood %}
+
+            <div class="mood">
+                💭 Today's mood: {{ record.mood }}
+            </div>
+
+            {% endif %}
+
+
+            {% if record.notes %}
+
+            <div class="notes">
+                <strong>📝 Notes:</strong>
+                {{ record.notes }}
+            </div>
+
+            {% endif %}
+
+
+        </div>
+
+        {% endfor %}
+
+
+    {% else %}
+
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                🐶
+            </div>
+
+            <h2>
+                No behavior entries yet.
+            </h2>
+
+            <p>
+                Start recording your dog's daily mood
+                and behavior to build their story.
+            </p>
+
+            <a href="{% url 'pawmood' %}" class="btn primary">
+                Add First Entry 😊
+            </a>
+
+        </div>
+
+
+    {% endif %}
+
+
+    <div class="buttons">
+
+        <a href="{% url 'pawmood' %}" class="btn primary">
+            + Add Mood Entry
+        </a>
+
+        <a href="{% url 'home' %}" class="btn secondary">
+            ← Back Home
+        </a>
+
+    </div>
+
+
+</div>
+
+
+</body>
+</html>

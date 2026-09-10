@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Vitality | PawPulse</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #fffaf5;
+            color: #2d2d2d;
+        }
+
+        nav {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            background: white;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #e8753d;
+        }
+
+        .logo span {
+            color: #333;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: #e8753d;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 60px auto;
+            padding: 0 25px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #ffe8d8;
+            color: #d85f28;
+            padding: 9px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            font-size: 44px;
+            margin-bottom: 12px;
+        }
+
+        .header p {
+            color: #777;
+            line-height: 1.6;
+        }
+
+        .form-card {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 22px;
+            padding: 35px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 14px;
+            background: #fff;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #e8753d;
+        }
+
+        .button-area {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            border: none;
+            background: #e8753d;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #cf5e28;
+        }
+
+        .back {
+            display: inline-flex;
+            align-items: center;
+            padding: 14px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #444;
+            border: 1px solid #ddd;
+            background: white;
+        }
+
+        .back:hover {
+            border-color: #e8753d;
+        }
+
+        @media (max-width: 700px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .field.full {
+                grid-column: auto;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <nav>
+
+        <div class="logo">
+            🐾 Paw<span>Pulse</span>
+        </div>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="{% url 'home' %}">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'dog_list' %}">
+                    My Dogs
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    Vitality
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    PawMood
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    PawMatch
+                </a>
+            </li>
+
+            <li>
+                <a href="#">
+                    PawFind
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <main class="container">
+
+        <div class="header">
+
+            <div class="tag">
+                💓 DAILY VITALITY
+            </div>
+
+            <h1>
+                How is your dog doing today?
+            </h1>
+
+            <p>
+                Track the little things that help you understand
+                your dog's everyday wellbeing.
+            </p>
+
+        </div>
+
+
+        <div class="form-card">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="form-grid">
+
+                    <div class="field">
+                        <label>Dog</label>
+                        {{ form.dog }}
+                    </div>
+
+
+                    <div class="field">
+                        <label>Date</label>
+                        {{ form.date }}
+                    </div>
+
+
+                    <div class="field">
+                        <label>🍗 Meals</label>
+                        {{ form.meals }}
+                    </div>
+
+
+                    <div class="field">
+                        <label>💧 Water (Litres)</label>
+                        {{ form.water }}
+                    </div>
+
+
+                    <div class="field">
+                        <label>🚶 Walk (Minutes)</label>
+                        {{ form.walk_minutes }}
+                    </div>
+
+
+                    <div class="field">
+                        <label>😴 Sleep (Hours)</label>
+                        {{ form.sleep_hours }}
+                    </div>
+
+
+                    <div class="field">
+                        <label>⚡ Energy Level</label>
+                        {{ form.energy }}
+                    </div>
+
+
+                    <div class="field">
+                        <label>🎾 Playtime (Minutes)</label>
+                        {{ form.play_minutes }}
+                    </div>
+
+
+                    <div class="field full">
+                        <label>😊 Mood</label>
+                        {{ form.mood }}
+                    </div>
+
+                </div>
+
+
+                <div class="button-area">
+
+                    <button type="submit">
+                        Save Today's Vitality 💓
+                    </button>
+
+                    <a href="{% url 'home' %}" class="back">
+                        ← Back
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>
